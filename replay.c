@@ -23,20 +23,20 @@ init(const char *in_fn)
 		sprintf(buf, "%s%s", EV_PREFIX, ev_devices[i]);
 		out_fds[i] = open(buf, O_WRONLY | O_NDELAY);
 		if (out_fds[i] < 0) {
-			printf("Couldn't open output device\n");
+			perror("failed to open output device");
 			return 1;
 		}
 	}
 
 	if (stat(in_fn, &statinfo) == -1) {
-		perror("Couldn't stat input\n");
+		perror("failed to stat input file");
 		return 2;
 	}
 
 	num_events = statinfo.st_size / (sizeof(struct input_event) + sizeof(int));
 
 	if ((in_fd = open(in_fn, O_RDONLY)) < 0) {
-		perror("Couldn't open input\n");
+		perror("failed to open input file");
 		return 3;
 	}
 
@@ -61,12 +61,12 @@ replay(void)
 		struct timeval now, tevent, tsleep;
 
 		if (read(in_fd, &outputdev, sizeof(outputdev)) != sizeof(outputdev)) {
-			perror("Input read error\n");
+			perror("device read error");
 			return 1;
 		}
 
 		if (read(in_fd, &event, sizeof(event)) != sizeof(event)) {
-			perror("Input read error\n");
+			perror("event read error");
 			return 2;
 		}
 
@@ -83,7 +83,7 @@ replay(void)
 		event.time = tevent;
 
 		if (write(out_fds[outputdev], &event, sizeof(event)) != sizeof(event)) {
-			perror("Output write error\n");
+			perror("output write error");
 			return 2;
 		}
 
@@ -102,7 +102,7 @@ main(int argc, char *argv[])
 	if (argc > 1) {
 		infn = argv[1];
 	} else {
-		fprintf(stderr, "using default input file\n");
+		fprintf(stderr, "using default input file (%s)\n", DEF_FN);
 	}
 
 	if (init(infn) != 0) {
