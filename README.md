@@ -23,8 +23,8 @@ Usage:
 
     record [<eventfile>]
 
-Records input events and dumps them to <eventfile>, which defaults to
-/sdcard/events.
+Records input events and dumps them to `eventfile`, which defaults to
+`/sdcard/events`.
 
 replay
 ------
@@ -33,12 +33,12 @@ Usage:
 
     replay [<eventfile>]
 
-Replay events from <eventfile> (default /sdcard/events).
+Replay events from `eventfile` (default `/sdcard/events`).
 
 
 Authors
 -------
 
-Originally written by Nicholas FitzRoy-Dale <nfd@cse.unsw.edu.au>
-Maintained by Aaron Carroll <aaronc@cse.unsw.edu.au>
+Originally written by Nicholas FitzRoy-Dale <nfd@cse.unsw.edu.au>.
+Maintained by Aaron Carroll <aaronc@cse.unsw.edu.au>.
 
